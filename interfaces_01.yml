@@ -1,0 +1,101 @@
+---
+    - pause:
+        prompt: "enter IP address"
+        echo: yes
+      register: IPADD
+    - set_fact:
+        ip: "{{IPADD.user_input}}"
+
+    - pause:
+        prompt: "enter Gateway"
+        echo: yes
+      register: gatew
+    - set_fact:
+        gw: "{{gatew.user_input}}"
+    
+    - pause:
+        prompt: "enter subnet"
+        echo: yes
+      register: subnet
+    - set_fact:
+        snet: "{{subnet.user_input}}"
+
+    
+
+    - pause:
+        prompt: "enter prefix"
+        echo: yes
+      register: pfix
+    - set_fact:
+        pre: "{{pfix.user_input}}"
+
+    - pause:
+        prompt: "enter Device name"
+        echo: yes
+      register: dname
+    - set_fact:
+        dev: "{{dname.user_input}}"
+###################
+    - debug:
+       var: ip
+    - debug:
+       var: gw
+    - debug:
+       var: pre
+    - debug:
+       var: dev
+
+   
+
+
+######################
+ #   - debug:
+ #       var: "{{'IPADDR'+item|string}}"
+ #     register: ip
+ #   - debug: 
+ #       var: "{{'GATEWAY'+item|string}}"
+ #     register: gw
+
+
+ #   - debug: 
+ #       var: "{{'PREFIX'+item|string}}"
+ #     register: pre
+ #   - debug:
+ #       var: "{{'DEVICE'+item|string}}"
+ #     register: dev
+ #   - debug:
+ #       var: "{{'NW'+item|string}}"
+ #     register: NW
+
+    - name: generate uuid
+      shell:
+           cmd: /usr/bin/uuidgen "{{dev}}"
+      register: uuidvar
+
+    - name: temp
+      template:
+         src: template/ifcfg-ens33.j2
+         dest: /etc/sysconfig/network-scripts/ifcfg-{{dev}}
+         owner: root
+         group: root
+         mode: '0644'
+
+    - name: temp
+      template:
+         src: template/route.j2
+         dest: /etc/sysconfig/network-scripts/route-{{dev}}
+         owner: root
+         group: root
+         mode: '0644'
+    - name: temp
+      template:
+         src: template/rule.j2
+         dest: /etc/sysconfig/network-scripts/rule-{{dev}}
+         owner: root
+         group: root
+         mode: '0644'
+
+
+
+
+... 

@@ -1,0 +1,43 @@
+---
+- name: create persistent network configuration
+  #vars_files:
+  #          - vars/vars.yml
+  vars_prompt:
+         - name: count
+           prompt: How many interfaces you want to add ?
+           private: no
+  hosts: all
+  tasks:
+    - name: install NetworkManager-dispatcher.service
+      yum:  
+         name: NetworkManager-config-routing-rules
+         state: present 
+    - name: enable the service
+      systemd:
+            name: NetworkManager-dispatcher.service
+            state: started
+            enabled: yes
+
+     #- pause:
+     #    prompt: "How many interfaces you want to add ?"
+     #    echo: yes
+     #  register: cnt
+     #- set_fact:
+     #    count: "{{cnt.user_input}}"
+     #- debug:
+     #    var: count|int
+     #  register: c1
+     #
+    - debug:
+       var: count | type_debug
+ 
+
+    - name: create interfaces and routes
+      include: interfaces_01.yml
+      loop: "{{  range(1,count|int+1) | list }}"
+
+
+
+
+
+    

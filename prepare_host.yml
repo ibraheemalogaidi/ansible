@@ -1,0 +1,25 @@
+---
+- name: to prepare a host for ansible 
+  hosts: all
+  tasks:
+       - name: create user
+         user:
+             name: user
+             group: wheel
+
+       - name: alter sudoers file
+         copy: 
+             content: "user ALL=(ALL) NOPASSWD: ALL"
+             dest: /etc/sudoers.d/user
+             owner: root
+             group: root
+             
+ 
+       - name: copy ssh keys
+         authorized_key:
+             user: user
+             state: present
+             key: "{{ lookup('file', '/home/user/.ssh/id_rsa.pub') }}"
+             
+       
+... 
