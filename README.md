@@ -1,6 +1,6 @@
 # Symetric policy based routing using ansible
 The purpose of this playbook is to create a default route for every interface that you specify making it reachable from outside of it`s network
-##usage:
+## usage:
 1. The controlled node must be reachable by the controller via ssh 
 2. To establish ssh passwordless login , use the playbook prepare_host.yml 
 ```
