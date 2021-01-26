@@ -6,10 +6,11 @@ The purpose of this playbook is to create a default route for every interface th
 ```
 ansible-playbook prepare_host.yml  -u root -k
 ```
-this should setup passwordless ssh login automatically 
+this should setup passwordless ssh login automatically.
+
 3. Run :
 
-  ````
+  ```
   ansible-playbook main_02.yml
   ```
   first you will be prompted to enter the number of interfaces you want to add
