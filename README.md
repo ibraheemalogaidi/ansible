@@ -40,4 +40,4 @@ enter prefix:
 enter Device name:
 ens192
 ``` 
-this is the name of the network interface 
+this is the name of the network interface .
