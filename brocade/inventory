@@ -1,0 +1,1 @@
+san_eng_zone_seed_san_a ansible_connection=local fos_ip_addr=192.168.25.52  fos_user_name=admin fos_password="TIBtib!@#123" fos_https=False
